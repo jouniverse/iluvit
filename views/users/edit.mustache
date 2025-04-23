@@ -1,0 +1,108 @@
+{{> header}}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Edit Product</h2>
+
+    {{#message}}
+    <div class="alert alert-{{type}}">{{message}}</div>
+    {{/message}}
+
+    <form action="/users/update-product" method="POST">
+        <input type="hidden" name="productId" value="{{id}}" />
+        <input type="hidden" name="currentImageURL" value="{{imageURL}}" />
+        
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" name="title" value="{{title}}" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control" name="description" rows="4" maxlength="1000" required>{{description}}</textarea>
+            <small class="form-text text-muted">Maximum 1000 characters. <span id="charCount">{{description.length}}</span>/1000</small>
+        </div>
+
+        <div class="form-group">
+            <label>Price</label>
+            <input type="number" name="price" value="{{price}}" step="0.01" class="form-control" required>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="btn btn-secondary">Save Changes</button>
+            <a href="/users/products" class="btn btn-primary">Cancel</a>
+        </div>
+    </form>
+
+    <br>
+
+    <form action="/users/upload/edit/{{id}}" method="POST" enctype="multipart/form-data" class="mb-4">
+        <div class="form-group">
+            <div class="custom-file">
+                <input type="file" name="photo" class="custom-file-input" id="imageUpload" multiple accept="image/*">
+                <label class="custom-file-label" for="imageUpload">Choose images</label>
+            </div>
+            <small class="form-text text-muted">You can select multiple images</small>
+        </div>
+        <button type="submit" class="btn btn-secondary">Upload Images</button>
+    </form>
+
+    <!-- Current Images -->
+    <div class="mb-4">
+        <h5>Current Images</h5>
+        <div class="row">
+            {{#images}}
+            <div class="col-md-4 mb-3">
+                <div class="card mb-0 background-color-black">
+                    <img src="/uploads/{{imageURL}}" class="card-img-top" alt="Product image">
+                    <div class="card-body p-0">
+                        <form action="/users/delete-image/{{id}}" method="POST" class="w-100">
+                            <button type="submit" class="btn btn-danger w-100 h-100 m-0">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {{/images}}
+            {{^images}}
+            {{#imageURL}}
+            <div class="col-md-4 mb-3">
+                <div class="card mb-0 background-color-black">
+                    <img src="/uploads/{{imageURL}}" class="card-img-top" alt="Product image">
+                    <div class="card-body p-0">
+                        <form action="/users/delete-image/{{id}}" method="POST" class="w-100">
+                            <button type="submit" class="btn btn-danger w-100 m-0">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {{/imageURL}}
+            {{/images}}
+        </div>
+    </div>
+</div>
+
+<script>
+// Add character count functionality
+const descriptionTextarea = document.querySelector('textarea[name="description"]');
+const charCount = document.getElementById('charCount');
+
+descriptionTextarea.addEventListener('input', function() {
+    const currentLength = this.value.length;
+    charCount.textContent = currentLength;
+    
+    if (currentLength > 1000) {
+        this.value = this.value.substring(0, 1000);
+        charCount.textContent = 1000;
+    }
+});
+
+document.getElementById('imageUpload').addEventListener('change', function(e) {
+    const label = this.nextElementSibling;
+    if (this.files.length > 0) {
+        label.textContent = `${this.files.length} file(s) selected`;
+    } else {
+        label.textContent = 'Choose images';
+    }
+});
+</script>
+
+{{> footer}}

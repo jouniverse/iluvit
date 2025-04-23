@@ -1,0 +1,29 @@
+{
+  "name": "iluvit-app",
+  "version": "1.0.0",
+  "description": "E-commerce app for second-hand design items",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^2.2.0",
+    "dotenv": "^16.4.5",
+    "express": "^5.1.0",
+    "express-fileupload": "^1.5.1",
+    "express-session": "^1.18.1",
+    "formidable": "^3.5.2",
+    "mustache-express": "^1.3.2",
+    "pg": "^8.14.1",
+    "sequelize": "^6.37.7",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}

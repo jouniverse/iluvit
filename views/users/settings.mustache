@@ -1,0 +1,111 @@
+{{> header}}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="mb-4">User Settings</h2>
+            
+            {{#message}}
+            <div class="alert alert-{{type}}">{{message}}</div>
+            {{/message}}
+
+            <!-- User Profile Details -->
+            <div class="settings-card">
+                <div class="card-header">
+                    <h5>User Details</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Show current user fields -->
+                    <p class="color-text-white"><b class="color-text-secondary">Name:</b> {{user.name}}</p>
+                    <p class="color-text-white"><b class="color-text-secondary">Email:</b> {{user.email}}</p>
+                    <p class="color-text-white"><b class="color-text-secondary">Address:</b> {{user.address}}</p>
+                    <p class="color-text-white"><b class="color-text-secondary">Phone:</b> {{user.phone}}</p>
+                    <!-- Update user fields -->
+                    <h5 class="color-text-white">Update User Details</h5>
+                     <!-- Name -->
+                    <form action="/users/update-details" method="POST">
+                        <div class="mb-3">
+                            <label for="name" class="form-label color-text-white">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{user.name}}" required>
+                        </div>
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label color-text-white">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{user.email}}" required>
+                        </div>
+                        <!-- Address -->
+                        <div class="mb-3">
+                            <label for="address" class="form-label color-text-white">Address</label>
+                            <input type="text" class="form-control" id="address" name="address" value="{{user.address}}" required>
+                        </div>
+                        <!-- Phone -->
+                        <div class="mb-3">
+                            <label for="phone" class="form-label color-text-white">Phone</label>
+                            <input type="text" class="form-control" id="phone" name="phone" value="{{user.phone}}" required>
+                        </div>
+                        <button type="submit" class="btn btn-secondary">Update Details</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Update Username Form -->
+            <div class="settings-card">
+                <div class="card-header">
+                    <h5>Update Username</h5>
+                </div>
+                <div class="card-body">
+                    <form action="/users/update-username" method="POST">
+                        <div class="mb-3">
+                            <label for="username" class="form-label color-text-white">New Username</label>
+                            <input type="text" class="form-control" id="username" name="username" value="{{user.username}}" required>
+                        </div>
+                        <button type="submit" class="btn btn-secondary">Update Username</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Update Password Form -->
+            <div class="settings-card">
+                <div class="card-header">
+                    <h5>Update Password</h5>
+                </div>
+                <div class="card-body">
+                    <form action="/users/update-password" method="POST">
+                        <div class="mb-3">
+                            <label for="currentPassword" class="form-label color-text-white">Current Password</label>
+                            <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label color-text-white">New Password</label>
+                            <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label color-text-white">Confirm New Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-secondary">Update Password</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Delete Account Section -->
+            <div class="settings-card danger-zone">
+                <div class="card-header">
+                    <h5 class="color-text-white">Delete Account</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-danger">Warning: This action cannot be undone. All your data will be permanently deleted.</p>
+                    <form action="/users/delete-account" method="POST">
+                        <div class="mb-3">
+                            <label for="confirmDelete" class="form-label color-text-white">Type your password to confirm</label>
+                            <input type="password" class="form-control" id="confirmDelete" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-danger">Delete Account</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{> footer}} 

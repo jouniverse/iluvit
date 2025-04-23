@@ -1,0 +1,15 @@
+notes/
+node_modules/
+*.zip
+*.ai
+*.psd
+.DS_Store
+.cursorrules
+.vscode/
+.env
+.env.local
+.env.development
+.env.production
+*.sql
+*.log
+config/config.json

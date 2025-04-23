@@ -1,0 +1,67 @@
+{{> header}}
+
+<div class="container mt-5">
+    {{#message}}
+    <div class="alert alert-{{type}}">{{message}}</div>
+    {{/message}}
+
+    {{#product}}
+    <div class="row">
+        <div class="col-md-6">
+            {{#images}}
+                <img src="/uploads/{{imageURL}}" class="product-image" alt="{{../title}}" onerror="this.src='/images/no-image.jpg'">
+            {{/images}}
+            {{^images}}
+                <img src="/images/no-image.jpg" class="product-image" alt="{{title}}">
+            {{/images}}
+        </div>
+        <div class="col-md-6">
+            <h2 class="product-title">{{title}}</h2>
+            <p class="text-muted">By {{User.username}}</p>
+            <p class="product-price color-text-white">${{price}}</p>
+            <p class="body-text">{{description}}</p>
+
+            <form action="/users/add-to-cart" method="POST">
+                <input type="hidden" name="productId" value="{{id}}">
+                <button type="submit" class="btn btn-primary btn-lg mt-4" {{#isOutOfStock}}disabled{{/isOutOfStock}}>Buy Now</button>
+            </form>
+
+            <!-- Add Comment Form -->
+            <div class="mt-5">
+                <h4>Add a Comment</h4>
+                <form action="/users/add-comment" method="POST">
+                    <input type="hidden" name="productId" value="{{id}}">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Comment</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Submit Comment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="mb-4">Comments</h3>
+            {{#comments}}
+            <div class="comment-card">
+                <h5 class="comment-title color-text-white">{{title}}</h5>
+                <p class="text-muted">By {{User.username}}</p>
+                <p class="body-text color-text-white">{{description}}</p>
+            </div>
+            {{/comments}}
+            {{^comments}}
+            <p class="body-text">No comments yet. Be the first to comment!</p>
+            {{/comments}}
+        </div>
+    </div>
+    {{/product}}
+</div>
+
+{{> footer}} 

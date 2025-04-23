@@ -1,0 +1,25 @@
+{{> header}}
+
+<div class="container-fluid px-4">
+    {{#message}}
+    <div class="alert alert-{{type}}">{{message}}</div>
+    {{/message}}
+
+    <div class="gallery-container">
+        {{#products}}
+            {{#images}}
+            <div class="gallery-item">
+                <img src="/uploads/{{imageURL}}" alt="{{../title}}" onerror="this.src='/images/no-image.jpg'">
+            </div>
+            {{/images}}
+        {{/products}}
+        {{^products}}
+        <div class="col-12 text-center">
+            <h2 class="mt-5">Welcome to ILUVIT</h2>
+            <p class="body-text">Discover unique second-hand design pieces.</p>
+        </div>
+        {{/products}}
+    </div>
+</div>
+
+{{> footer}}

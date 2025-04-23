@@ -1,0 +1,96 @@
+
+    {{> header}}
+
+    <div class="container mt-5">
+        <h2 class="mb-4">Add Product</h2>
+
+        {{#message}}
+        <div class="alert alert-{{type}}">{{message}}</div>
+        {{/message}}
+
+        <form action="/users/add-product" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" name="title" class="form-control" placeholder="Enter title" required>
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <textarea class="form-control" name="description" rows="4" maxlength="1000" required></textarea>
+                <small class="form-text text-muted">Maximum 1000 characters. <span id="charCount">0</span>/1000</small>
+            </div>
+
+            <div class="form-group">
+                <label>Price</label>
+                <input type="number" name="price" class="form-control" step="0.01" required>
+            </div>
+
+            <div class="form-group">
+                <label>Images</label>
+                <div class="custom-file">
+                    <input type="file" name="photo" class="custom-file-input" id="imageUpload" multiple accept="image/*">
+                    <label class="custom-file-label" for="imageUpload">Choose images</label>
+                </div>
+                <small class="form-text text-muted">You can select multiple images</small>
+            </div>
+
+            <!-- Image Preview Section -->
+            <div class="form-group mt-3">
+                <div id="imagePreview" class="row">
+                    <!-- Preview images will be added here -->
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary">Save Product</button>
+                <a href="/users/products" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+    // Add character count functionality
+    const descriptionTextarea = document.querySelector('textarea[name="description"]');
+    const charCount = document.getElementById('charCount');
+    
+    descriptionTextarea.addEventListener('input', function() {
+        const currentLength = this.value.length;
+        charCount.textContent = currentLength;
+        
+        if (currentLength > 1000) {
+            this.value = this.value.substring(0, 1000);
+            charCount.textContent = 1000;
+        }
+    });
+
+    document.getElementById('imageUpload').addEventListener('change', function(e) {
+        const preview = document.getElementById('imagePreview');
+        preview.innerHTML = ''; // Clear previous previews
+        
+        if (this.files) {
+            Array.from(this.files).forEach(file => {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const col = document.createElement('div');
+                    col.className = 'col-md-3 mb-3';
+                    
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'img-thumbnail';
+                    img.style.maxHeight = '200px';
+                    img.style.width = '100%';
+                    img.style.objectFit = 'cover';
+                    
+                    col.appendChild(img);
+                    preview.appendChild(col);
+                }
+                
+                reader.readAsDataURL(file);
+            });
+        }
+    });
+    </script>
+
+    {{> footer}}
+

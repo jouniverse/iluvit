@@ -1,0 +1,492 @@
+/* Font Imports */
+@import url("https://fonts.googleapis.com/css2?family=Alumni+Sans+Pinstripe:ital@0;1&family=Chonburi&family=Funnel+Display:wght@300..800&family=Poiret+One&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap");
+
+/* Base Styles */
+:root {
+  --primary-color: #ff4d5a;
+  --secondary-color: #6c63ff;
+  --accent-color: #2a2a2a;
+  --background-color: #1a1a1a;
+  --text-color: #ffffff;
+  --light-gray: #f5f5f5;
+  --spacing-unit: 1rem;
+  --danger-color: #dc3545;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-color);
+  border-left: 1px solid var(--text-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border: 1px solid var(--text-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
+
+/* Firefox scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) var(--background-color);
+}
+
+body {
+  /* font-family: "Alumni Sans Pinstripe", sans-serif; */
+  font-family: "Poiret One", sans-serif;
+  /* font-size: 1.1rem; */
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+/* Typography */
+
+h1,
+h2 {
+  /* font-family: "Funnel Display", sans-serif; */
+  /* font-family: "Zain", sans-serif; */
+  font-family: "Chonburi", sans-serif;
+  font-optical-sizing: auto;
+  /* font-weight: 900; */
+  font-style: normal;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  /* font-family: "Funnel Display", sans-serif; */
+  font-family: "Poiret One", sans-serif;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--spacing-unit);
+}
+
+.body-text {
+  font-family: "Poiret One", sans-serif;
+  letter-spacing: 0.1em;
+  font-size: 1.1rem;
+}
+
+/* Navigation */
+.navbar {
+  background-color: var(--background-color) !important;
+  border-bottom: 1px solid var(--light-gray);
+  padding: 1.5rem 1rem;
+}
+
+.navbar-brand {
+  font-family: "Zain", sans-serif;
+  font-weight: 900;
+  font-size: 1.8rem;
+  color: var(--text-color) !important;
+}
+
+.navbar-toggler {
+  border-color: var(--text-color);
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") !important;
+}
+
+.nav-link {
+  font-family: "Alumni Sans Pinstripe", sans-serif;
+  font-size: 1.2rem;
+  color: var(--text-color) !important;
+  margin: 0 1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--primary-color) !important;
+}
+
+/* Cards */
+.card {
+  border: none;
+  border-radius: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  filter: brightness(0.7);
+}
+
+.row img {
+  filter: brightness(0.7);
+}
+
+.card-img-top {
+  border-radius: 0;
+  height: 300px;
+  object-fit: cover;
+}
+
+.card-body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  /* border: 1px solid var(--text-color);
+  border-top: none; */
+  border-bottom: 2px solid var(--text-color);
+  transition: border-color 0.3s ease;
+}
+
+.card-body:hover {
+  /* border: 1px solid var(--primary-color);
+  border-top: none; */
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.card-body.p-0 {
+  padding: 0 !important;
+  border: none;
+}
+
+.card-body.p-0 .btn {
+  padding: 0.8rem;
+  border-radius: 0;
+  margin: 0;
+  height: auto;
+}
+
+.card-title {
+  font-family: "Chonburi", sans-serif;
+  font-size: 1.4rem;
+}
+
+.card-text {
+  font-family: "Poiret One", sans-serif;
+  /* font-family: "Funnel Display", sans-serif; */
+}
+
+/* Forms */
+.form-group {
+  color: var(--text-color);
+  margin-bottom: 1.5rem;
+}
+
+.form-group .btn {
+  margin-top: 0.5rem;
+}
+
+.form-control {
+  border-radius: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: 1px solid var(--light-gray);
+  padding: 1rem;
+  font-family: "Poiret One", sans-serif;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border-color: var(--primary-color);
+}
+
+.custom-file-input {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+}
+
+.custom-file-input:focus {
+  box-shadow: none;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border-color: var(--primary-color);
+}
+
+.custom-file-label {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+  border-radius: 0;
+}
+
+.custom-file-label::after {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border-left: 1px solid var(--text-color);
+  border-radius: 0;
+}
+
+.form-text {
+  color: var(--text-color);
+}
+
+/* Buttons */
+.btn {
+  border-radius: 0;
+  padding: 0.8rem 2rem;
+  font-family: "Alumni Sans Pinstripe", sans-serif;
+  /* font-family: "Poiret One", sans-serif; */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Button hover effects for dark background pages */
+.dark-bg .btn:hover,
+.navbar .btn:hover,
+body[data-page="login"] .btn:hover,
+body[data-page="register"] .btn:hover,
+body[data-page="add-product"] .btn:hover {
+  border: 1px solid var(--text-color);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+.btn-primary:hover {
+  background-color: var(--background-color);
+  border-color: var(--text-color);
+  color: var(--text-color);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: var(--text-color);
+}
+
+.btn-secondary:hover {
+  background-color: var(--background-color);
+  border-color: var(--text-color);
+  color: var(--text-color);
+}
+
+.btn-danger {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+.btn-danger:hover {
+  background-color: var(--background-color);
+  border-color: var(--text-color);
+  color: var(--text-color);
+}
+
+/* Button Groups */
+.button-group {
+  display: flex;
+  gap: 0;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.button-group .btn,
+.button-group form {
+  flex: 1 1 50%;
+}
+
+.button-group form {
+  display: flex;
+}
+
+.button-group .btn {
+  width: 100%;
+  height: 44px;
+}
+
+/* Single buttons (not in groups) */
+.btn:not(.button-group .btn) {
+  height: 44px;
+  min-width: 120px;
+}
+
+/* Home Page Gallery */
+.gallery-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  filter: brightness(0.7);
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+/* Product Details */
+.product-image {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+}
+
+.product-title {
+  font-size: 2.5rem;
+  margin: 2rem 0 1rem;
+}
+
+.product-price {
+  /* font-family: "Zain", sans-serif; */
+  /* font-weight: 900; */
+  font-size: 1.4rem;
+  /* color: var(--background-color); */
+  color: var(--text-color);
+}
+
+/* Comments Section */
+.comment-card {
+  background-color: var(--background-color);
+  border: 1px solid var(--text-color);
+  border-left: 3px solid var(--primary-color);
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  /* background-color: var(--light-gray); */
+}
+
+.comment-title {
+  font-family: "Zain", sans-serif;
+  font-weight: 900;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+/* Alerts */
+.alert {
+  border-radius: 0;
+  border: none;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* Settings Page */
+.settings-card {
+  margin-bottom: 2rem;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border-radius: 0;
+  background-color: #ffffff;
+}
+
+.settings-card .card-header {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+  border-bottom: none;
+  padding: 1.5rem;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+}
+
+.settings-card .card-body {
+  color: var(--background-color);
+  background-color: var(--background-color);
+  border: 1px solid var(--text-color);
+}
+
+.settings-card .card-header h5 {
+  margin: 0;
+}
+
+.settings-card.danger-zone .card-header {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+.settings-card.danger-zone .btn-danger {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.settings-card.danger-zone .btn-danger:hover {
+  background-color: var(--background-color);
+  border-color: var(--text-color);
+}
+
+.color-text-black {
+  color: var(--background-color);
+}
+
+.background-color-black {
+  background-color: var(--background-color);
+}
+
+.color-text-white {
+  color: var(--text-color);
+}
+
+.color-text-primary {
+  color: var(--primary-color);
+}
+
+.color-text-secondary {
+  color: var(--secondary-color);
+}
+
+/* Keep the existing product preview image style */
+.product-preview-image {
+  width: 300px;
+}
+
+/* Shopping Cart */
+.shopping-cart-card {
+  border-top: 2px solid var(--text-color);
+  border-radius: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: border-top-color 0.3s ease;
+}
+
+.shopping-cart-card .card-header {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border-top: 2px solid var(--text-color);
+  transition: border-top-color 0.3s ease;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .card-img-top {
+    height: 200px;
+  }
+
+  .gallery-container {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  .product-image {
+    height: 300px;
+  }
+}
