@@ -8,6 +8,14 @@
   ],
   "routes": [
     {
+      "src": "/css/(.*)",
+      "dest": "/css/$1"
+    },
+    {
+      "src": "/uploads/(.*)",
+      "dest": "/uploads/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "app.js"
     }

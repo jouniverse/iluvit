@@ -67,9 +67,9 @@ app.use(
 );
 
 // static folders
-app.use("/uploads", express.static(UPLOADS_PATH));
-app.use("/images", express.static(path.join(PUBLIC_PATH, "images")));
-app.use("/css", express.static("css"));
+app.use(express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/css", express.static(path.join(__dirname, "css")));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
