@@ -68,8 +68,23 @@ app.use(
 
 // static folders
 app.use(express.static(path.join(__dirname, "public")));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-app.use("/css", express.static(path.join(__dirname, "css")));
+app.use(
+  "/uploads",
+  express.static(path.join(__dirname, "uploads"), {
+    setHeaders: (res) => {
+      res.set("Cache-Control", "public, max-age=31536000");
+    },
+  })
+);
+app.use(
+  "/css",
+  express.static(path.join(__dirname, "css"), {
+    setHeaders: (res) => {
+      res.set("Cache-Control", "public, max-age=31536000");
+      res.set("Content-Type", "text/css");
+    },
+  })
+);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
