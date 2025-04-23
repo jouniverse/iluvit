@@ -53,7 +53,7 @@
             {{#images}}
             <div class="col-md-4 mb-3">
                 <div class="card mb-0 background-color-black">
-                    <img src="/uploads/{{imageURL}}" class="card-img-top" alt="Product image">
+                    <img src="https://storage.googleapis.com/iluvit-uploads/{{imageURL}}" class="card-img-top" alt="Product image">
                     <div class="card-body p-0">
                         <form action="/users/delete-image/{{id}}" method="POST" class="w-100">
                             <button type="submit" class="btn btn-danger w-100 h-100 m-0">Delete</button>
@@ -66,7 +66,7 @@
             {{#imageURL}}
             <div class="col-md-4 mb-3">
                 <div class="card mb-0 background-color-black">
-                    <img src="/uploads/{{imageURL}}" class="card-img-top" alt="Product image">
+                    <img src="{{imageURL}}" class="card-img-top" alt="Product image">
                     <div class="card-body p-0">
                         <form action="/users/delete-image/{{id}}" method="POST" class="w-100">
                             <button type="submit" class="btn btn-danger w-100 m-0">Delete</button>

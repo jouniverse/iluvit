@@ -7,6 +7,10 @@ const bcrypt = require("bcrypt");
 const upload = require("express-fileupload");
 const fs = require("fs");
 const path = require("path");
+const {
+  uploadFile: uploadToGCS,
+  deleteFile: deleteFromGCS,
+} = require("../config/gcs");
 
 let uniqueFilename = "";
 
@@ -72,16 +76,15 @@ router.post("/upload/edit/:id", async (req, res) => {
 
     for (const file of filesArray) {
       const uniqueFilename = `${uuidv1()}${path.extname(file.name)}`;
-      const uploadPath = path.join(__basedir, "uploads", uniqueFilename);
 
-      // Move the file to the uploads directory
-      await file.mv(uploadPath);
+      // Upload to Google Cloud Storage
+      await uploadToGCS(file, uniqueFilename);
 
-      // Create database record
+      // Create database record with just the filename
       uploadPromises.push(
         models.ProductImage.create({
           productId: productId,
-          imageURL: uniqueFilename,
+          imageURL: uniqueFilename, // Store only the filename
         })
       );
     }
@@ -158,11 +161,29 @@ router.get("/products", async (req, res) => {
       const productData = product.get({ plain: true });
       // Always provide an images array
       productData.images = productData.images || [];
-      // For fallback, also provide imageURL for {{^images.length}}{{#imageURL}}...
+
+      // Process image URLs
+      if (productData.images.length > 0) {
+        productData.images = productData.images.map((image) => ({
+          ...image,
+          imageURL: image.imageURL
+            ? image.imageURL.startsWith("http")
+              ? image.imageURL
+              : `https://storage.googleapis.com/${process.env.GCS_BUCKET_NAME}/${image.imageURL}`
+            : null,
+        }));
+      }
+
+      // For fallback, also provide imageURL
       productData.imageURL =
         productData.images.length > 0
           ? productData.images[0].imageURL
-          : productData.imageURL || null;
+          : productData.imageURL
+          ? productData.imageURL.startsWith("http")
+            ? productData.imageURL
+            : `https://storage.googleapis.com/${process.env.GCS_BUCKET_NAME}/${productData.imageURL}`
+          : null;
+
       return productData;
     });
 
@@ -186,6 +207,8 @@ router.post("/add-product", async (req, res) => {
     const { title, description, price } = req.body;
     const userId = req.session.user.userId;
 
+    console.log("Adding product:", { title, description, price, userId });
+
     // Create the product
     const product = await models.Product.create({
       title,
@@ -193,6 +216,8 @@ router.post("/add-product", async (req, res) => {
       price: parseFloat(price),
       userId,
     });
+
+    console.log("Product created:", product.id);
 
     // Handle image uploads
     if (req.files && req.files.photo) {
@@ -203,22 +228,31 @@ router.post("/add-product", async (req, res) => {
       const filesArray = Array.isArray(files) ? files : [files];
 
       for (const file of filesArray) {
+        console.log("Processing file:", {
+          name: file.name,
+          size: file.size,
+          mimetype: file.mimetype,
+        });
+
         const uniqueFilename = `${uuidv1()}${path.extname(file.name)}`;
-        const uploadPath = path.join(__basedir, "uploads", uniqueFilename);
+        console.log("Generated filename:", uniqueFilename);
 
-        // Move the file to the uploads directory
-        await file.mv(uploadPath);
+        try {
+          // Upload to Google Cloud Storage
+          await uploadToGCS(file, uniqueFilename);
+          console.log("File uploaded to GCS:", uniqueFilename);
 
-        // Create database record
-        uploadPromises.push(
-          models.ProductImage.create({
+          // Create database record with just the filename
+          const imageRecord = await models.ProductImage.create({
             productId: product.id,
             imageURL: uniqueFilename,
-          })
-        );
+          });
+          console.log("Image record created:", imageRecord.id);
+        } catch (error) {
+          console.error("Error processing file:", error);
+          throw error;
+        }
       }
-
-      await Promise.all(uploadPromises);
     }
 
     res.redirect("/users/products");
@@ -447,15 +481,22 @@ router.get("/all-products", async (req, res) => {
 
     const processedProducts = products.map((product) => {
       const productData = product.get({ plain: true });
-      let imageURL = null;
-      if (productData.images && productData.images.length > 0) {
-        imageURL = productData.images[0].imageURL;
-      } else if (productData.imageURL) {
-        imageURL = productData.imageURL;
+      productData.images = productData.images || [];
+
+      // Process image URLs
+      if (productData.images.length > 0) {
+        productData.images = productData.images.map((image) => ({
+          ...image,
+          imageURL: image.imageURL
+            ? image.imageURL.startsWith("http")
+              ? image.imageURL
+              : `https://storage.googleapis.com/${process.env.GCS_BUCKET_NAME}/${image.imageURL}`
+            : null,
+        }));
       }
+
       return {
         ...productData,
-        imageURL,
         isOutOfStock: productData.quantity === 0,
       };
     });
@@ -511,10 +552,18 @@ router.get("/product-details/:id", async (req, res) => {
 
     const productData = product.get({ plain: true });
     productData.images = productData.images || [];
-    productData.imageURL =
-      productData.images.length > 0
-        ? productData.images[0].imageURL
-        : productData.imageURL || null;
+
+    // Process image URLs
+    if (productData.images.length > 0) {
+      productData.images = productData.images.map((image) => ({
+        ...image,
+        imageURL: image.imageURL
+          ? image.imageURL.startsWith("http")
+            ? image.imageURL
+            : `https://storage.googleapis.com/${process.env.GCS_BUCKET_NAME}/${image.imageURL}`
+          : null,
+      }));
+    }
 
     res.render("users/product-details", {
       product: productData,

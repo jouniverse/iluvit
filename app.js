@@ -132,7 +132,11 @@ router.get("/", async (req, res) => {
       if (productData.images && productData.images.length > 0) {
         productData.images = productData.images.map((img) => ({
           ...img,
-          imageURL: img.imageURL,
+          imageURL: img.imageURL
+            ? img.imageURL.startsWith("http")
+              ? img.imageURL
+              : `https://storage.googleapis.com/${process.env.GCS_BUCKET_NAME}/${img.imageURL}`
+            : null,
         }));
       } else {
         productData.images = [];

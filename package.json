@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/storage": "^7.8.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^2.2.0",
     "dotenv": "^16.4.5",
@@ -19,6 +20,7 @@
     "express-session": "^1.18.1",
     "formidable": "^3.5.2",
     "mustache-express": "^1.3.2",
+    "multer": "^1.4.5-lts.1",
     "pg": "^8.14.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.7",

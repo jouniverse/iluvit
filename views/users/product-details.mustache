@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-6">
             {{#images}}
-                <img src="/uploads/{{imageURL}}" class="product-image" alt="{{../title}}" onerror="this.src='/images/no-image.jpg'">
+                <img src="{{imageURL}}" class="product-image" alt="{{../title}}" onerror="this.src='/images/no-image.jpg'">
             {{/images}}
             {{^images}}
                 <img src="/images/no-image.jpg" class="product-image" alt="{{title}}">

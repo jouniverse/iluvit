@@ -12,7 +12,7 @@
         <div class="col-md-4 mb-4">
             <div class="card">
                 {{#images}}
-                <img src="/uploads/{{imageURL}}" class="card-img-top" alt="{{../title}}" onerror="this.src='/images/no-image.jpg'">
+                <img src="{{imageURL}}" class="card-img-top" alt="{{../title}}" onerror="this.src='/images/no-image.jpg'">
                 {{/images}}
                 {{^images}}
                 <img src="/images/no-image.jpg" class="card-img-top" alt="{{title}}">
