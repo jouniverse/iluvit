@@ -126,21 +126,13 @@ router.get("/", async (req, res) => {
       order: [["createdAt", "DESC"]],
     });
 
-    // Pass images array for carousel
     const processedProducts = products.map((product) => {
       const productData = product.get({ plain: true });
-      if (productData.images && productData.images.length > 0) {
-        productData.images = productData.images.map((img) => ({
-          ...img,
-          imageURL: img.imageURL
-            ? img.imageURL.startsWith("http")
-              ? img.imageURL
-              : `https://storage.googleapis.com/${process.env.GCS_BUCKET_NAME}/${img.imageURL}`
-            : null,
-        }));
-      } else {
-        productData.images = [];
-      }
+      productData.images = productData.images || [];
+      productData.imageURL =
+        productData.images.length > 0
+          ? productData.images[0].imageURL
+          : productData.imageURL || null;
       return productData;
     });
 

@@ -11,6 +11,7 @@ const {
   uploadFile: uploadToGCS,
   deleteFile: deleteFromGCS,
 } = require("../config/gcs");
+const { Op } = require("sequelize");
 
 let uniqueFilename = "";
 
@@ -465,7 +466,13 @@ router.get("/logout", (req, res) => {
 // Add route for viewing all products
 router.get("/all-products", async (req, res) => {
   try {
+    const searchQuery = req.query.search || "";
+    const whereClause = searchQuery
+      ? { title: { [Op.iLike]: `%${searchQuery}%` } }
+      : {};
+
     const products = await models.Product.findAll({
+      where: whereClause,
       include: [
         {
           model: models.User,
@@ -503,6 +510,7 @@ router.get("/all-products", async (req, res) => {
 
     res.render("users/all-products", {
       products: processedProducts,
+      searchQuery: searchQuery,
       isAuthenticated: true,
     });
   } catch (error) {

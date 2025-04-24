@@ -104,16 +104,16 @@ router.get("/", async (req, res) => {
         },
       ],
       order: [["createdAt", "DESC"]],
+      limit: 40, // Limit to 40 products for better UX
     });
 
     const processedProducts = products.map((product) => {
       const productData = product.get({ plain: true });
-      // Ensure images array exists
       productData.images = productData.images || [];
-      // For backward compatibility with single imageURL
-      if (productData.imageURL && productData.images.length === 0) {
-        productData.images.push({ imageURL: productData.imageURL });
-      }
+      productData.imageURL =
+        productData.images.length > 0
+          ? productData.images[0].imageURL
+          : productData.imageURL || null;
       return productData;
     });
 
