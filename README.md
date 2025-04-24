@@ -11,7 +11,7 @@ The site is monitored and curated, so that the quality of the items meets the us
 ## UI
 
 ![Home](./public/images/ui/ui-1.png)
-![All Products](./public/images/ui/ui-2.png)
+![All Products](./public/images/ui/ui-2-1.png)
 ![Add Product](./public/images/ui/ui-3.png)
 
 A walkthrough of the app is available [here](https://youtu.be/kp4rbC9mkaQ).
